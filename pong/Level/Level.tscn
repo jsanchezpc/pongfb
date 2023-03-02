@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Opponent/Opponent.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Ball/Ball.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Level/Level.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 539, 10 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 28.5, 354 )
+
+[node name="Level" type="Node"]
+script = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -3.0
+margin_top = 13.0
+margin_bottom = 13.0
+color = Color( 0.14902, 0.376471, 0.168627, 1 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 48, 576 )
+
+[node name="Opponent" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1040, 144 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 0, 12 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 540, -10 )
+shape = SubResource( 1 )
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2( 8, 741 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2( 533, -11 )
+shape = SubResource( 1 )
+
+[node name="Ball" parent="." instance=ExtResource( 3 )]
+position = Vector2( 540, 360 )
+
+[node name="Left" type="Area2D" parent="."]
+position = Vector2( -47, 10 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Left"]
+position = Vector2( 18.5, 356 )
+shape = SubResource( 2 )
+
+[node name="Right" type="Area2D" parent="."]
+position = Vector2( 1088, 14 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right"]
+position = Vector2( 20, 350 )
+shape = SubResource( 2 )
+
+[node name="Playerscore" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 200.0
+margin_top = 350.0
+margin_right = -520.0
+margin_bottom = -338.0
+text = "SCORE
+"
+align = 1
+valign = 1
+
+[node name="OpponentScore" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 536.0
+margin_top = 342.0
+margin_right = -216.0
+margin_bottom = -343.0
+text = "SCORE"
+align = 1
+valign = 1
+
+[connection signal="body_entered" from="Left" to="." method="_on_Left_body_entered"]
+[connection signal="body_entered" from="Right" to="." method="_on_Right_body_entered"]
